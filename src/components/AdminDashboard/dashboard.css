@@ -1,0 +1,32 @@
+.card-section {
+    width: 100%;
+    display:flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+  }
+
+  .container{
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .create-button{
+      padding: 10px;
+      box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+      border:none;
+      border-radius: 4px;
+      background-color: goldenrod;
+      margin: 0px 50px 30px 0px;
+      color: #fff;
+      font-weight: bolder;
+      display:flex;
+      align-self: flex-end;
+  }
+
+  .create-button:hover{
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    cursor: pointer;
+  }

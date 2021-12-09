@@ -1,0 +1,24 @@
+.carousel-container {
+    width: 100%;
+    background: chocolate;
+}
+
+.image-tag {
+    width: 100%;
+    height: 500px;
+}
+
+.legend{
+    width:25% !important;
+    height: 250px;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    background: red;
+    position: absolute;
+    background: #e4dcdc50 !important;
+}
+
+.legend:hover{
+    background: #e4dcdc50 !important;
+}

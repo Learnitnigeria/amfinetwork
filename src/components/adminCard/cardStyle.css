@@ -1,0 +1,65 @@
+
+.cardContainer {
+    /* Add shadows to create the "card" effect */
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    width: 20%;
+    margin: 0px 0px 40px 0px;
+    border-radius: 7px;
+    background: #fff;
+  }
+
+.imageContainer{
+    height: 30%;
+    width: 100%;
+    margin: 0 auto; 
+}
+
+  /* On mouse-over, add a deeper shadow */
+  .cardContainer:hover {
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+  }
+  
+  /* Add some padding inside the card container */
+  .textContainer {
+    margin: 10px 10px 5px 0px;
+    width: 100%;
+    text-align: center;
+  }
+
+  .buttonContainer{
+      
+      box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+      border:none;
+      border-radius: 4px;
+      background-color: goldenrod;
+      color:#fff;
+      font-weight: bolder;
+      display: flex;
+      flex-direction: column;
+  }
+
+  .buttonContainer:hover {
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    cursor: pointer;
+  }
+
+.lineBreak{
+      border:0.5px solid rgb(214, 211, 211);
+  }
+
+.text-content{
+  font-family: georgia;
+}
+
+.content-title{
+  font-family: verdana;
+  color: rgb(9, 60, 102);
+}
+
+.card-button-view{
+  width: 100%;
+  height: 40px;
+  display: flex;
+  justify-content: space-around;
+}

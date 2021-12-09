@@ -1,0 +1,80 @@
+.loginContainer{
+    width:100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    
+}
+
+.inputContainer{
+    width:50vw;
+    display: flex;
+    flex-direction: column;
+    padding: auto;
+}
+
+.form{
+    width:100vw;
+    height: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-top: -50px;
+}
+
+.label {
+    margin-left:10px
+}
+
+.input {
+    margin:10px;
+    border-radius: 4px;
+    border:0.5px solid;
+    padding: 20px;
+    outline: none;
+}
+
+.loginButtonContainer{
+    width:100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+.loginButton{
+    width: 15%;
+    padding:20px;
+    font-size: 16px;
+    background-color: goldenrod;
+    border:none;
+    border-radius: 4px;
+}
+
+.loginButton:hover{
+    cursor: pointer;
+}
+
+.title{
+    font-weight: 900;
+    font-size: 40px;
+    font-family: courier;
+}
+
+.loginLogo{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+   margin-top: 50px;
+}
+.amfi-login-logo{
+    width: 10%;
+    height: 100px;
+}
+
+.amfi-login-logo:hover{
+    cursor: pointer;
+}
