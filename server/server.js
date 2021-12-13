@@ -6,18 +6,25 @@ const app = express()
 const path = require('path');
 const upload = require("../multer")
 const cloudinary = require("../cloudinary")
+const bcrypt = require("bcryptjs");
 const fs = require("fs")
 const publicPath = path.join(__dirname, '..', 'build');
 const __Article = require("../model")
+const Admin = require("../userModel")
+const {defaultAdmin} = require("../createAdmin")
+const jwt = require("jsonwebtoken");
+const Validator = require("validatorjs");
+const {isAuth} = require("../isAuth")
 
 
 
 mongoose.connect(process.env.MongoUrl, { useUnifiedTopology: true, useNewUrlParser: true }).then(() => {
     console.log("Successfully connected to db")
+    defaultAdmin()
  })
 
 
- app.use(express.static(publicPath));
+app.use(express.static(publicPath));
 app.use(express.urlencoded({extended:false}))
 app.use(express.json())
 app.use(cors("*"))
@@ -27,7 +34,210 @@ app.get('*', (req, res) => {
     res.sendFile(path.join(publicPath, 'index.html'));
  });
 
-app.post("/single_upload",upload.single('file'), async(req, res) => {
+
+ app.post("/login", async(req, res) => {
+
+        try {
+            const rules = {
+                email: "required|email",
+                password: "required|string",
+            };
+
+            const validation = new Validator(req.body, rules);
+
+            if (validation.fails()) {
+                return res.status(400).json({
+                    responseCode: "02",
+                    status: "failed",
+                    message: "Validation Errors",
+                    data: { errors: validation.errors.all() }
+                });
+            }
+
+            const { email, password } = req.body;
+
+            // check if a user with that email exists
+            const user = await Admin.findOne({ email: email });
+            
+            if (user === undefined) {
+                return res.status(404).json({
+                    responseCode: "08",
+                    status: "failed",
+                    message: `Incorrect admin email provided`,
+                });
+            }
+
+            const validPassword = await bcrypt.compare(password, user.password);
+
+            if (validPassword === false) {
+                return res.status(400).json({
+                    responseCode: "02",
+                    status: 'failed',
+                    message: `Password does not match`,
+                    data: {
+                        password: ['Passwords does not match'],
+                    },
+                });
+            }
+
+            user.lastLogin = new Date()
+            user.save()
+
+            const token = await jwt.sign(
+                {
+                    id: user._id,
+                    name: user.name,
+                    email: user.email,
+                    location: user.location
+                },
+                process.env.JWT_KEY,
+                {
+                    expiresIn: '24hr',
+                }
+            );
+
+            return res.status(201).json({
+                responseCode: "00",
+                status: "success",
+                message: "Login Successful",
+                data: {
+                    email,
+                    name: user.name,
+                    location: user.location,
+                    token
+                }
+            });
+        } catch (error) {
+            return res.status(500).json({
+                responseCode: "99",
+                status: "failed",
+                message: "An error Occurred Please Try again",
+            });
+        }
+ })
+
+
+app.post("/reset_password", async(req, res) => {
+  
+        try {
+    
+            const rules = {
+                id: "required|string",
+                password: "required|confirmed|min:6"
+            };
+    
+          
+            const validation = new Validator(req.body, rules);
+    
+            if (validation.fails()) {
+                return res.status(400).json({
+                    responseCode: "02",
+                    status: "failed",
+                    message: "Validation Errors",
+                    data: { errors: validation.errors.all() }
+                });
+            }
+         
+            const {id, password} = req.body;
+    
+    
+          const user = await Admin.findOne({ _id: id});
+                if (user === undefined) {
+                    return res.status(404).json({
+                        responseCode: "08",
+                        status: "failed",
+                        message: `Invalid parameter provided.`,
+                    });
+                }
+    
+               
+                const salt = await bcrypt.genSalt(10);
+                const hash = await bcrypt.hash(password, salt);
+      
+              
+                user.password = hash;
+                await user.save();
+      
+                return res.status(201).json({
+                    responseCode: "00",
+                    status: "success",
+                    message: "Password Successfully updated",
+                });
+        } catch (error) {
+            return res.status(500).json({
+                responseCode: "99",
+                status: "failed",
+                message: "An error Occurred Please Try again",
+            });
+        }
+})
+      
+app.post("/forgot_password", (req,res) => {
+
+        try {
+            const rules = {
+                email: "required|email"
+            };
+    
+            const validation = new Validator(req.body, rules);
+    
+            if (validation.fails()) {
+                return res.status(400).json({
+                    responseCode: "02",
+                    status: "failed",
+                    message: "Validation Errors",
+                    data: { errors: validation.errors.all() }
+                });
+            }
+          const { email } = req.body;
+    
+          const user = await Admin.findOne({ email: email });
+                if (user === undefined) {
+                    return res.status(404).json({
+                        responseCode: "08",
+                        status: "failed",
+                        message: `Wrong email ${email} provided.`,
+                    });
+                }
+      
+          const message = await getTemplate(
+            "forgotPassword",
+            {
+              fullname: `${user.name}`,
+              message: "If you requested for a password update please kindly click on the link below else ignore.",
+              link: `${process.env.FRONTEND_BASE_URL}/reset_password?reset_token=${user._id}`,
+              buttonTitle:"https://kfjdfkjdfmweweipqw[pas30pk5j3js7nsk1m,6,nnnsnddbsm,m"
+            },
+            {
+              escape: (html) => {
+                return String(html);
+              },
+            }
+          );
+    
+          const payload = {
+            receiver: user.email,
+            subject: "Forgot Password",
+            message,
+          }
+          
+        sendMail(payload)
+        return res.status(201).json({
+            responseCode: "00",
+            status: "success",
+            message: "Reset password code has been sent to your email.",
+        });
+         
+        } catch (error) {
+            return res.status(500).json({
+                responseCode: "99",
+                status: "failed",
+                message: "An error Occurred Please Try again",
+            });
+        }
+})
+
+app.post("/single_upload",isAuth, upload.single('file'), async(req, res) => {
     
     const file = req.file;
 
@@ -46,7 +256,7 @@ app.post("/single_upload",upload.single('file'), async(req, res) => {
 
 })
 
-app.post("/multiple_upload", upload.array("files"), async(req, res) => {
+app.post("/multiple_upload",isAuth, upload.array("files"), async(req, res) => {
     
     console.log(req.files, "from node")
 
@@ -75,7 +285,7 @@ app.post("/multiple_upload", upload.array("files"), async(req, res) => {
     
 })
 
-app.post("/publish", async(req, res) => {
+app.post("/publish",isAuth, async(req, res) => {
     try{
         const data = req.body;
         await __Article.create({...data})
@@ -99,7 +309,7 @@ app.post("/articles", async(req, res) => {
     }
 })
 
-app.put("/edit/:id", async(req, res) => {
+app.put("/edit/:id",isAuth, async(req, res) => {
     try{
         const {id} = req.params
         const data = req.body;
@@ -114,7 +324,7 @@ app.put("/edit/:id", async(req, res) => {
    
 })
 
-app.delete("/delete/:id", async(req, res) => {
+app.delete("/delete/:id",isAuth, async(req, res) => {
     try{
         const {id} = req.params;
         const response = await __Article.findOneAndDelete({_id:id})
