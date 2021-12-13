@@ -55,7 +55,17 @@
 .commitment{
   font-style: italic;
   animation: move-text 0.75s forwards;
-  
 }
+
+@media (max-width: 700px) {
+  .page-title{
+    font-size: 32px !important;
+  }
+  .commitment{
+    font-size: 13px;
+    margin-bottom: -30px !important;
+    color: #000000;
+  }
+  }
 
 

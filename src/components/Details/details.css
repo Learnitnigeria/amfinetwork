@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
 .header-section{
     width: 100%;
     position: fixed;
@@ -28,11 +29,16 @@
     height: 100%;
 }
 
+.text-container p{
+   font-size: 20px;
+   font-family: 'Roboto', sans-serif;
+}
 .text-container{
   width:90%;
   text-align: center;
   line-height: 30px;
   font-family: "Montserrat, sans-serif";
+  overflow: hidden;
 }
 
 .site-description{
@@ -63,22 +69,44 @@
 }
 
 .detail-images{
-  width: 100%;
+  /* max-width: 100%;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   margin-bottom: 200px;
   font-family: "Montserrat, sans-serif";
-  letter-spacing: 2px;
+  letter-spacing: 2px; */
+  padding: 30px;
+  display: grid;
+  grid-template-columns: 45% 45%;	
+  grid-gap: 30px;
+  margin-right: auto;
+  margin-left: 80px;
+  width: 90%;
 }
 
 .image-cont{
-  width:20%;
+  /* width:20%;
   height: 200px;
   border: none;
-  border-radius: 4px;
+  border-radius: 4px; */
 }
 
 .imagess{
-  width: 100%;
-  height: 100%;
+ max-width: 100%;
+ border-radius: 10px;
 }
+
+
+/* RESPONSIVENESS */
+
+@media (max-width: 700px) {
+  .text-container p{
+    font-size: 22px;
+  }
+  .imagess{
+    width: 400px;
+  }
+  .detail-images{
+    margin-left: 0;
+  }
+  }

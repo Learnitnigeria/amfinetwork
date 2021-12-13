@@ -27,6 +27,9 @@ function Login() {
             <div className="loginButtonContainer">
                 <button className="loginButton" onClick={()=> navigate('/adminDashboard')} >LOGIN</button>
             </div>
+            <div>
+                <p className='forgotPassword-link' onClick={()=> navigate('/ForgotPassword')}>Resert Password</p>
+            </div>
             </div>
         </div>
     )

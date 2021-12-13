@@ -1,4 +1,4 @@
-
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400&display=swap');
 .card {
     /* Add shadows to create the "card" effect */
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
@@ -11,9 +11,10 @@
   }
 
 .image{
-    height: 30%;
-    width: 100%;
+    max-width: 100%;
+    height: auto;
     margin: 0 auto; 
+    border-radius: 7px;
 }
 
 
@@ -35,6 +36,9 @@
       border:none;
       border-radius: 4px;
       background-color: goldenrod;
+      margin-bottom: 20px;
+      width: 12rem;
+      font-size: 20px;
   }
 
   .button:hover {
@@ -47,10 +51,33 @@
   }
 
 .text-content{
-  font-family: georgia;
+  font-family: 'Roboto', sans-serif;
+  color: black;
 }
 
 .content-title{
   font-family: verdana;
   color: rgb(9, 60, 102);
+}
+
+/* RESPONSIVENESS */
+
+@media (max-width: 700px) {
+.card {
+  width: 100%;
+  margin: 20px;
+}
+.card-button{
+  margin-bottom: 10px;
+}
+.text-content{
+  font-size: 22px;
+}
+.button{
+  width: 200px;
+  font-size: 20px;
+}
+.text-content{
+  padding: 10px;
+}
 }

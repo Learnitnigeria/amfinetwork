@@ -10,6 +10,8 @@ import App from './App';
 import Details from "../src/components/Details/details"
 import Login from "../src/components/Login/login"
 import AdminDashboard from "../src/components/AdminDashboard/dashboard"
+import ForgotPassword from './components/ForgotPassword/ForgotPassword';
+import Contact from './components/Contact/Contact';
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
@@ -20,6 +22,8 @@ ReactDOM.render(
       <Route path="/details" element={<Details />} />
       <Route path="/admin" element={<Login />} />
       <Route path="/adminDashboard" element={<AdminDashboard />} />
+      <Route path="/ForgotPassword" element={<ForgotPassword />} />
+      <Route path="/Contact" element={<Contact />} />
     </Routes>
   </BrowserRouter>
   </React.StrictMode>,

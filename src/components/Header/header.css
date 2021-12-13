@@ -2,15 +2,13 @@
     width: 100%;
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
-   
+    justify-content: space-between; 
 }
 .menu{
-    width: 30%;
+    width: 40%;
     display: flex;
     align-items: center;
 }
-
 .menu ul{
     width: 100%;
     display: flex;
@@ -39,4 +37,49 @@
 
 .amfi-logo:hover{
     cursor: pointer;
+}
+.humbuger-menu{
+    font-size: 35px;
+    color: #fff;
+    margin-right: 20px;
+    display: flex;
+    align-self:center;
+    display: none;
+}
+
+.humbuger-menu-container{
+    position: absolute;
+    top: 60px;
+    right: 20px;
+    right: 0;
+    background-color: grey;
+    color: #fff;
+    height: 400px;
+    width: 200px;
+    transition: width 3s;
+}
+
+.mobile-nav li{
+    font-size: 18px;
+    list-style-type: none;
+    padding: 10px;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+@media (max-width: 700px) {
+   .amfi-logo{
+      width: 50px;
+   }
+   .menu{
+       margin-right: 100px;
+       display: none;
+   }
+   .humbuger-menu{
+       display:flex;
+   }
+
+   /* .menu ul{
+       font-size: 10px;
+   } */
 }
