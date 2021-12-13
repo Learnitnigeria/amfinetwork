@@ -21,19 +21,19 @@ const images = [
     },
     {
         image: slide3,
-        description: "This is image two"
+        description: "This is image three"
     },
     {
         image: slide4,
-        description: "This is image two"
+        description: "This is image four"
     },
     {
         image: slide5,
-        description: "This is image two"
+        description: "This is image five"
     },
     {
         image: slide6,
-        description: "This is image two"
+        description: "This is image six"
     },
 ]
 

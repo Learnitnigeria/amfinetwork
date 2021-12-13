@@ -27,6 +27,7 @@ function Dashboard() {
       };
     
     return (
+      <>
         <div className="container">
             <h1>Admin dashboard</h1>
             <button className="create-button" type="button" onClick={() => showModal()}>
@@ -35,15 +36,16 @@ function Dashboard() {
             <Modal show={state} handleClose={hideModal}>
                 <CreateArticle pageTitle="Create Article"/>
             </Modal>
-           
-            <div className="card-section">
+        </div>
+
+        <div className="card-container">
         {
           Articles && Articles.map((item) => (
-            <Card item = {item}/>
+               <Card item = {item}/>
           ))
         }
-      </div>
         </div>
+        </>
     )
 }
 

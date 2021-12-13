@@ -240,7 +240,6 @@ app.post("/forgot_password", (req,res) => {
 app.post("/single_upload",isAuth, upload.single('file'), async(req, res) => {
     
     const file = req.file;
-
       cloudinary.uploads(file.path, "amfiDisplayImages")
         .then((result) => {
         res.status(200).json({
@@ -259,20 +258,16 @@ app.post("/single_upload",isAuth, upload.single('file'), async(req, res) => {
 app.post("/multiple_upload",isAuth, upload.array("files"), async(req, res) => {
     
     console.log(req.files, "from node")
-
     const uploader = async(path) => await cloudinary.uploads(path, "Images");
-
     if(req.method === "POST"){
         const urls = []
         const files = req.files
-
         for(const file of files){
             const {path} = file;
             const newPath = await uploader(path)
             urls.push(newPath)
             fs.unlinkSync(path)
         }
-
         res.status(200).json({
             message: "Images uploaded successfully",
             data:urls
@@ -299,11 +294,9 @@ app.post("/publish",isAuth, async(req, res) => {
 
 app.post("/articles", async(req, res) => {
     try{
-        
         const response = await __Article.find({}).sort({createdAt:-1})
         console.log(response, "fffffff")
         return res.status(200).json({articles:response})
-
     }catch(error){
         return res.status(500).send("Error fetching articles", error)
     }
@@ -321,7 +314,6 @@ app.put("/edit/:id",isAuth, async(req, res) => {
     }catch(error){
         return res.send("Error updating article", error)
     }
-   
 })
 
 app.delete("/delete/:id",isAuth, async(req, res) => {
@@ -331,16 +323,10 @@ app.delete("/delete/:id",isAuth, async(req, res) => {
         if(response){
             return res.json({message: "Article deleted"})
         }
-
     }catch(error){
         return res.send("Error deleting article", error)
     }
 })
-
-
-
-
-
 const port = process.env.PORT || 3002
 app.listen(port, (err) => {
     if(err){

@@ -4,7 +4,7 @@ import "./footer.css"
 function Footer() {
     return (
         <div className = "footer-container">
-            <div>Here comes the footer</div>
+            <p>&copy; Copywright 2021 Amfi</p>
         </div>
     )
 }

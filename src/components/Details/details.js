@@ -36,15 +36,11 @@ function Details(props) {
                         item.other_images.map(img => (
                             <div className="image-cont">
                         <img src={img.url} alt="Avatar" className="imagess" />
-                      
                     </div>
                         ))
                     }
-                    
-                
                 </div>
             </div>
-
             <div className="footer-section">
                 <Footer />
             </div>

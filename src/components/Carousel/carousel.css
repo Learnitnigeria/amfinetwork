@@ -10,15 +10,15 @@
 
 .legend{
     width:25% !important;
-    height: 250px;
     justify-content: center;
     display: flex;
     align-items: center;
-    background: red;
+    background: #000 !important;
     position: absolute;
-    background: #e4dcdc50 !important;
+  
 }
 
-.legend:hover{
+/* .legend:hover{
     background: #e4dcdc50 !important;
-}
+} */
+
