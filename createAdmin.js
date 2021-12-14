@@ -1,12 +1,12 @@
 const Admin = require("./userModel")
-const bcrypt = require("bcryptjs");
+const bcrypt = require("bcryptjs")
 
-export const defaultAdmin = async() => {
+const defaultAdmin = async() => {
 
     const data = {
         name: "Amfi admin",
         location: "Abuja",
-        email: "admin@amfinetwork.com",
+        email: "chibuikepatrick2@gmail.com",
         password: "justin1234"
     }
 
@@ -23,3 +23,6 @@ export const defaultAdmin = async() => {
                 console.log("Admin created")
             }
 }
+
+
+module.exports = defaultAdmin

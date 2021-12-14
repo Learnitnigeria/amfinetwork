@@ -1,7 +1,7 @@
 const jwt = require( "jsonwebtoken")
  
 
-export const isAuth = async(req, res, next) => {
+const isAuth = async(req, res, next) => {
   
     try {
         const token = req.headers["authorization"]  
@@ -19,3 +19,5 @@ export const isAuth = async(req, res, next) => {
         res.send("Session expired! Login to continue")
     }
 }
+
+module.exports = isAuth

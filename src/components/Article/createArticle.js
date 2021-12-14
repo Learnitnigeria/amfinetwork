@@ -16,8 +16,11 @@ function CreateArticle({item, pageTitle}) {
     const [isUpdating, setIsUpdating] = useState(false)
     const [validMultipleUrl, setValidMultipleUrl] = useState([])
     const [validSingleUrl, setValidSingleUrl] = useState(null)
+    const [token, setToken] = useState("")
 
     useEffect(() => {
+        const tok = localStorage.getItem("token")
+        setToken(tok)
         if(item === undefined || item === null){
             setContent("") 
             setTitle("")
@@ -38,7 +41,11 @@ function CreateArticle({item, pageTitle}) {
             data.append('file', e.target.files[0])
 
             setIsProcessingSingle(true)
-            await axios.post('http://localhost:3002/single_upload', data).then((res) => {
+            await axios.post('/single_upload', data, {
+                headers: {
+                    authorization: `Bearer ${token}`
+                }
+            }).then((res) => {
                 setValidSingleUrl(res.data.result.url)
                 setIsProcessingSingle(false)
                 ShowMessage(type.DONE, res.data.message)
@@ -70,7 +77,11 @@ function CreateArticle({item, pageTitle}) {
             }
 
             setIsProcessingMultiple(true)
-            await axios.post('http://localhost:3002/multiple_upload', data).then((res) => {
+            await axios.post('/multiple_upload', data, {
+                headers: {
+                    authorization: `Bearer ${token}`
+                }
+            }).then((res) => {
                 setValidMultipleUrl(res.data.data)
                 setIsProcessingMultiple(false)
                 ShowMessage(type.DONE, res.data.message)
@@ -91,7 +102,11 @@ function CreateArticle({item, pageTitle}) {
     const handleUpdate= async () => {
         const id = item ? item._id : null
         setIsUpdating(true)
-        await axios.put(`http://localhost:3002/edit/${id}`, payload).then((res) => {
+        await axios.put(`/edit/${id}`, payload, {
+            headers: {
+                authorization: `Bearer ${token}`
+            }
+        }).then((res) => {
             setIsUpdating(false)
             ShowMessage(type.DONE, res.data.message)
         }).catch((err) => {
@@ -106,7 +121,11 @@ function CreateArticle({item, pageTitle}) {
             return;
         }
         setIsProcessing(true)
-        await axios.post('http://localhost:3002/publish', payload).then((res) => {
+        await axios.post('/publish', payload, {
+            headers: {
+                authorization: `Bearer ${token}`
+            }
+        }).then((res) => {
             setIsProcessing(false)
             ShowMessage(type.DONE, res.data.message)
         }).catch((err) => {

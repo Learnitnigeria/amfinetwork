@@ -12,6 +12,7 @@ import Login from "../src/components/Login/login"
 import AdminDashboard from "../src/components/AdminDashboard/dashboard"
 import ForgotPassword from './components/ForgotPassword/ForgotPassword';
 import Contact from './components/Contact/Contact';
+import ResetPassword from "./components/ResetPassword/reset_password"
 import reportWebVitals from './reportWebVitals';
 
 ReactDOM.render(
@@ -24,6 +25,7 @@ ReactDOM.render(
       <Route path="/adminDashboard" element={<AdminDashboard />} />
       <Route path="/ForgotPassword" element={<ForgotPassword />} />
       <Route path="/Contact" element={<Contact />} />
+      <Route path="/reset_password" element={<ResetPassword />} />
     </Routes>
   </BrowserRouter>
   </React.StrictMode>,

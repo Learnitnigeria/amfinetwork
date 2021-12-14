@@ -5,13 +5,15 @@ import {Modal} from "../modal/modal"
 import CreateArticle from "../Article/createArticle"
 import "./dashboard.css"
 import axios from "axios"
+import { useNavigate } from 'react-router-dom';
 
 function Dashboard() {
+  const navigate = useNavigate(); 
     const [state, setState] = useState(false)
     const [Articles, setArticles] =useState([])
 
   useEffect(async() => {
-    await axios.post("http://localhost:3002/articles", {data:"Its a get method"}).then((res) => {
+    await axios.post("/articles", {data:"Its a get method"}).then((res) => {
       setArticles(res.data.articles)
   }).catch((err) => {
     console.log(err)

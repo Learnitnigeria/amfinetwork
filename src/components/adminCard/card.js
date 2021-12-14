@@ -16,8 +16,14 @@ function Card({ item }) {
   const truncated = item.content.slice(0, 50) + "..."
 
   const deleteArticle = async (id) => {
+    const token = await localStorage.getItem("token")
+      
     setIsProcessing(true)
-    await axios.delete(`http://localhost:3002/delete/${id}`).then((res) => {
+    await axios.delete(`/delete/${id}`, {
+      headers: {
+          authorization: `Bearer ${token}`
+      }
+  }).then((res) => {
       if (res) {
         setIsProcessing(false)
         ShowMessage(type.DONE, res.data.message)

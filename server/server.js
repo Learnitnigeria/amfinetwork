@@ -11,10 +11,12 @@ const fs = require("fs")
 const publicPath = path.join(__dirname, '..', 'build');
 const __Article = require("../model")
 const Admin = require("../userModel")
-const {defaultAdmin} = require("../createAdmin")
+const defaultAdmin = require("../createAdmin")
 const jwt = require("jsonwebtoken");
 const Validator = require("validatorjs");
-const {isAuth} = require("../isAuth")
+const isAuth = require("../isAuth")
+const {getTemplate} = require("../Utils/getTemplate")
+const {sendMail} = require("../Utils/email.service")
 
 
 
@@ -172,7 +174,7 @@ app.post("/reset_password", async(req, res) => {
         }
 })
       
-app.post("/forgot_password", (req,res) => {
+app.post("/forgot_password", async(req,res) => {
 
         try {
             const rules = {
@@ -190,9 +192,13 @@ app.post("/forgot_password", (req,res) => {
                 });
             }
           const { email } = req.body;
+
+          console.log(email, "ffff")
     
           const user = await Admin.findOne({ email: email });
+          console.log(user, "user")
                 if (user === undefined) {
+                   
                     return res.status(404).json({
                         responseCode: "08",
                         status: "failed",
@@ -201,9 +207,9 @@ app.post("/forgot_password", (req,res) => {
                 }
       
           const message = await getTemplate(
-            "forgotPassword",
+            "forgotpassword",
             {
-              fullname: `${user.name}`,
+              fullname: user.name,
               message: "If you requested for a password update please kindly click on the link below else ignore.",
               link: `${process.env.FRONTEND_BASE_URL}/reset_password?reset_token=${user._id}`,
               buttonTitle:"https://kfjdfkjdfmweweipqw[pas30pk5j3js7nsk1m,6,nnnsnddbsm,m"
@@ -229,12 +235,46 @@ app.post("/forgot_password", (req,res) => {
         });
          
         } catch (error) {
+            console.log(error, "pass")
             return res.status(500).json({
                 responseCode: "99",
                 status: "failed",
                 message: "An error Occurred Please Try again",
             });
         }
+})
+
+
+app.get("/current_user", async(req,res) => {
+
+    try {
+       const user = req.user
+
+      const response = await Admin.findOne({ email: user.email });
+      console.log(user, "user")
+            if (response === undefined) {
+                return res.status(404).json({
+                    responseCode: "08",
+                    status: "failed",
+                    message: `Seesion expired!`,
+                });
+            }
+  
+    
+    return res.status(201).json({
+        responseCode: "00",
+        status: "success",
+        message: "user found",
+        data: response
+    });
+     
+    } catch (error) {
+        return res.status(500).json({
+            responseCode: "99",
+            status: "failed",
+            message: "An error Occurred Please Try again",
+        });
+    }
 })
 
 app.post("/single_upload",isAuth, upload.single('file'), async(req, res) => {
