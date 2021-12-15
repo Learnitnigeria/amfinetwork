@@ -57,9 +57,10 @@
   animation: move-text 0.75s forwards;
 }
 
-@media (max-width: 700px) {
+@media (max-width: 850px) {
   .page-title{
     font-size: 32px !important;
+
   }
   .commitment{
     font-size: 13px;

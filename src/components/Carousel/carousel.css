@@ -1,6 +1,7 @@
 .carousel-container {
     width: 100%;
     background: chocolate;
+    margin-top: 85px;
 }
 
 .image-tag {
@@ -9,16 +10,55 @@
 }
 
 .legend{
-    width:25% !important;
+    max-width:30% !important;
     justify-content: center;
     display: flex;
+    flex-direction: column;
     align-items: center;
     background: #000 !important;
     position: absolute;
-  
+    font-size: 18px !important;
+}
+
+.legend h2{
+    font-weight: 700 !important;
+    font-size: 20px !important;
+}
+.carousel .slide .legend{
+    background-color: green !important;
+    opacity: 0.8 !important;
 }
 
 /* .legend:hover{
     background: #e4dcdc50 !important;
 } */
 
+
+@media (max-width: 850px) {
+    .image-tag {
+        width: 50%;
+        height: 200px;
+    }
+    .carousel-container {
+        width: 100%;
+        background: chocolate;
+        margin-top: 60px;
+    }
+    .legend{
+        max-width:100% !important;
+        background-color: green !important;
+        opacity: 0.8 !important;
+        font-size: 14px !important;
+        top: 48px !important;
+        overflow: hidden;
+        height: fit-content;
+    }
+    
+    .legend h2{
+        color: green !important;
+        opacity: 0.7 !important;
+        font-size: 13px !important;
+        color: #fff !important;
+    }
+    }
+  

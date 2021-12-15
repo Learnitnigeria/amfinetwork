@@ -3,5 +3,25 @@
     color: #fff;
     height: 80px;
     font-size: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
 }
 
+.social-links{
+    margin-left: 50px;
+}
+
+.icon{
+    font-size: 35px;
+    padding: 10px;
+}
+
+
+@media (max-width: 850px) {
+    .icon{
+        font-size: 22px; 
+    }
+    
+}

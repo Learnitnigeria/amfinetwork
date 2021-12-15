@@ -16,7 +16,8 @@ function Header() {
                 <ul>
                     <li  onClick={()=> navigate('/')}>HOME</li>
                     <li>NEWSLETTER</li>
-                    <li>CONTACT US</li>
+                    <li onClick={()=> navigate('/Contact')}>CONTACT US</li>
+                 
                 </ul>
             </div>
             <FaAlignRight onClick={()=>setToggle(!toggle)} className="humbuger-menu"/>
